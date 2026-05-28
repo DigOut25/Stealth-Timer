@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { StealthSlider } from '../components/UI/Slider';
 import { Controls } from '../components/Controls';
-import { theme } from '../constants/theme';
+import { colors, spacing, padding, fonts } from '../constants/theme';
 import { TimerDisplay } from '../components/Timer';
 
 export default function SettingsScreen() {
@@ -15,22 +15,12 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
-
-        {/* Logo */}
         <View style={styles.logoArea}>
-          <Text style={styles.logoText}>STEALTH</Text>
-          <Text style={styles.logoSub}>BJJ</Text>
+          <Image source={require('../assets/logo.png')} style={styles.logo} resizeMode="contain" />
         </View>
 
-        {/* Timer display (static on settings screen) */}
-        <TimerDisplay
-          secondsLeft={0}
-          currentRound={1}
-          totalRounds={numRounds}
-          showRound={false}
-        />
+        <TimerDisplay secondsLeft={0} currentRound={1} totalRounds={numRounds} showRound={false} />
 
-        {/* Sliders */}
         <View style={styles.sliders}>
           <StealthSlider
             label="Round Length"
@@ -53,10 +43,11 @@ export default function SettingsScreen() {
         </View>
 
         <Controls
-  onStop={() => {}}
-  onStart={() => router.push({ pathname: '/countdown', params: { roundLength, numRounds } })}
-/>
-
+          onStop={() => {}}
+          onStart={() =>
+            router.push({ pathname: '/countdown', params: { roundLength, numRounds } })
+          }
+        />
       </View>
     </SafeAreaView>
   );
@@ -65,64 +56,38 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: theme.colors.background,
+    backgroundColor: colors.background,
   },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: theme.spacing.lg,
-    paddingHorizontal: theme.spacing.md,
+    paddingVertical: spacing.lg,
+    paddingHorizontal: padding.screen,
   },
   logoArea: {
     alignItems: 'center',
-    marginTop: theme.spacing.md,
+    marginTop: spacing.md,
   },
   logoText: {
-    fontSize: 42,
-    fontWeight: '900',
-    color: "white",
-    letterSpacing: 8,
+    fontFamily: fonts.family.display,
+    fontSize: fonts.size.logo,
+    color: colors.text,
+    letterSpacing: fonts.letterSpacing.widest,
   },
   logoSub: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: "white",
-    letterSpacing: 6,
+    fontFamily: fonts.family.display,
+    fontSize: fonts.size.lg,
+    color: colors.text,
+    letterSpacing: fonts.letterSpacing.wider,
     marginTop: -4,
-  },
-  timerDisplay: {
-    fontSize: 96,
-    fontWeight: '200',
-    color: theme.colors.timerText,
-    letterSpacing: -2,
   },
   sliders: {
     width: '100%',
-    gap: theme.spacing.md,
+    gap: spacing.md,
   },
-  buttons: {
-    flexDirection: 'row',
-    gap: theme.spacing.sm,
-    width: '100%',
-    paddingHorizontal: theme.spacing.xs,
-  },
-  btn: {
-    flex: 1,
-    paddingVertical: 18,
-    borderRadius: theme.radius.button,
-    alignItems: 'center',
-  },
-  btnStop: {
-    backgroundColor: theme.colors.buttonStop,
-  },
-  btnStart: {
-    backgroundColor: theme.colors.buttonStart,
-  },
-  btnText: {
-    color: theme.colors.text,
-    fontSize: 20,
-    fontWeight: '700',
-    letterSpacing: 0.5,
+  logo: {
+    width: 300,
+    height: 200,
   },
 });

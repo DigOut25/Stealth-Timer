@@ -1,13 +1,16 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Controls } from '../components/Controls';
-import { theme } from '../constants/theme';
+import { colors, spacing, padding, fonts } from '../constants/theme';
 import { TimerDisplay } from '../components/Timer';
 import { useTimer } from '../hooks/useTimer';
 
 export default function CountdownScreen() {
-  const { roundLength, numRounds } = useLocalSearchParams<{ roundLength: string; numRounds: string }>();
+  const { roundLength, numRounds } = useLocalSearchParams<{
+    roundLength: string;
+    numRounds: string;
+  }>();
   const router = useRouter();
 
   const totalSeconds = parseInt(roundLength) * 60;
@@ -21,17 +24,11 @@ export default function CountdownScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
-
         <View style={styles.logoArea}>
-          <Text style={styles.logoText}>STEALTH</Text>
-          <Text style={styles.logoSub}>BJJ</Text>
+          <Image source={require('../assets/logo.png')} style={styles.logo} resizeMode="contain" />
         </View>
 
-        <TimerDisplay
-          secondsLeft={secondsLeft}
-          currentRound={currentRound}
-          totalRounds={rounds}
-        />
+        <TimerDisplay secondsLeft={secondsLeft} currentRound={currentRound} totalRounds={rounds} />
 
         {finished && <Text style={styles.finishedText}>Session Complete!</Text>}
 
@@ -40,7 +37,6 @@ export default function CountdownScreen() {
           onStart={() => setRunning(r => !r)}
           startLabel={finished ? 'Done' : running ? 'Pause' : 'Resume'}
         />
-
       </View>
     </SafeAreaView>
   );
@@ -49,36 +45,40 @@ export default function CountdownScreen() {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: theme.colors.background,
+    backgroundColor: colors.background,
   },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: theme.spacing.lg,
-    paddingHorizontal: theme.spacing.md,
+    paddingVertical: spacing.lg,
+    paddingHorizontal: padding.screen,
   },
   logoArea: {
     alignItems: 'center',
-    marginTop: theme.spacing.md,
+    marginTop: spacing.md,
   },
   logoText: {
-    fontSize: 42,
-    fontWeight: '900',
-    color: 'white',
-    letterSpacing: 8,
+    fontFamily: fonts.family.display,
+    fontSize: fonts.size.logo,
+    color: colors.text,
+    letterSpacing: fonts.letterSpacing.widest,
   },
   logoSub: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: 'white',
-    letterSpacing: 6,
+    fontFamily: fonts.family.display,
+    fontSize: fonts.size.lg,
+    color: colors.text,
+    letterSpacing: fonts.letterSpacing.wider,
     marginTop: -4,
   },
   finishedText: {
-    color: theme.colors.text,
-    fontSize: 22,
-    fontWeight: '600',
-    letterSpacing: 1,
+    color: colors.text,
+    fontFamily: fonts.family.display,
+    fontSize: fonts.size.xxl,
+    letterSpacing: fonts.letterSpacing.wide,
+  },
+  logo: {
+    width: 300,
+    height: 200,
   },
 });

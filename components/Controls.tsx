@@ -1,6 +1,6 @@
 import { View, StyleSheet } from 'react-native';
 import { Button } from './UI/Button';
-import { theme } from '../constants/theme';
+import { spacing } from '../constants/theme';
 
 type Props = {
   onStop: () => void;
@@ -20,8 +20,8 @@ export function Controls({ onStop, onStart, startLabel = 'Start' }: Props) {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    gap: theme.spacing.sm,
+    gap: spacing.sm,
     width: '100%',
-    paddingHorizontal: theme.spacing.xs,
+    paddingHorizontal: spacing.xs,
   },
 });

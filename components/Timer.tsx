@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { theme } from '../constants/theme';
+import { colors, spacing, fonts } from '../constants/theme';
 
 type Props = {
   secondsLeft: number;
@@ -30,17 +30,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   roundLabel: {
-    color: theme.colors.text,
-    fontSize: 18,
-    fontWeight: '500',
+    fontFamily: fonts.family.display,
+    color: colors.text,
+    fontSize: fonts.size.lg,
     opacity: 0.7,
-    marginBottom: theme.spacing.sm,
-    letterSpacing: 1,
+    marginBottom: spacing.sm,
+    letterSpacing: fonts.letterSpacing.wide,
   },
   timer: {
-    fontSize: 96,
-    fontWeight: '200',
-    color: theme.colors.text,
-    letterSpacing: -2,
+    fontFamily: fonts.family.display,
+    fontSize: fonts.size.timer,
+    color: colors.timerText,
+    letterSpacing: fonts.letterSpacing.tight,
   },
 });
