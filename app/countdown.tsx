@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
   logoText: {
     fontSize: 42,
     fontWeight: '900',
-    color: 'rgba(0,0,0,0.5)',
+    color: 'white',
     letterSpacing: 8,
   },
   logoSub: {
     fontSize: 16,
     fontWeight: '700',
-    color: 'rgba(0,0,0,0.25)',
+    color: 'white',
     letterSpacing: 6,
     marginTop: -4,
   },
