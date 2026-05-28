@@ -1,8 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
-import { StealthSlider } from '../components/Slider';
+import { StealthSlider } from '../components/UI/Slider';
+import { Controls } from '../components/Controls';
 import { theme } from '../constants/theme';
+import { TimerDisplay } from '../components/Timer';
 
 export default function SettingsScreen() {
   const [roundLength, setRoundLength] = useState(5);
@@ -20,7 +22,12 @@ export default function SettingsScreen() {
         </View>
 
         {/* Timer display (static on settings screen) */}
-        <Text style={styles.timerDisplay}>0:00</Text>
+        <TimerDisplay
+          secondsLeft={0}
+          currentRound={1}
+          totalRounds={numRounds}
+          showRound={false}
+        />
 
         {/* Sliders */}
         <View style={styles.sliders}>
@@ -44,17 +51,10 @@ export default function SettingsScreen() {
           />
         </View>
 
-        <View style={styles.buttons}>
-          <TouchableOpacity style={[styles.btn, styles.btnStop]}>
-            <Text style={styles.btnText}>Stop</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.btn, styles.btnStart]}
-            onPress={() => router.push({ pathname: '/countdown', params: { roundLength, numRounds } })}
-          >
-            <Text style={styles.btnText}>Start</Text>
-          </TouchableOpacity>
-        </View>
+        <Controls
+  onStop={() => {}}
+  onStart={() => router.push({ pathname: '/countdown', params: { roundLength, numRounds } })}
+/>
 
       </View>
     </SafeAreaView>

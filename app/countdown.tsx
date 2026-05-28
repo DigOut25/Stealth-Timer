@@ -1,7 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import {Controls} from "../components/Controls"
 import { theme } from '../constants/theme';
+import { TimerDisplay } from '../components/Timer';
 
 export default function CountdownScreen() {
   const { roundLength, numRounds } = useLocalSearchParams<{ roundLength: string; numRounds: string }>();
@@ -51,22 +53,17 @@ export default function CountdownScreen() {
           <Text style={styles.logoSub}>BJJ</Text>
         </View>
 
-        <View style={styles.timerArea}>
-          <Text style={styles.roundLabel}>Round {currentRound} of {rounds}</Text>
-          <Text style={styles.timerDisplay}>{display}</Text>
-        </View>
+        <TimerDisplay
+          secondsLeft={secondsLeft}
+          currentRound={currentRound}
+          totalRounds={rounds}
+        />
+        <Controls
+  onStop={() => router.back()}
+  onStart={() => setRunning(r => !r)}
+  startLabel={running ? 'Pause' : 'Resume'}
+/>
 
-        <View style={styles.buttons}>
-          <TouchableOpacity style={[styles.btn, styles.btnStop]} onPress={() => router.back()}>
-            <Text style={styles.btnText}>Stop</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.btn, styles.btnStart]}
-            onPress={() => setRunning(r => !r)}
-          >
-            <Text style={styles.btnText}>{running ? 'Pause' : 'Resume'}</Text>
-          </TouchableOpacity>
-        </View>
 
       </View>
     </SafeAreaView>
@@ -92,7 +89,7 @@ const styles = StyleSheet.create({
   logoText: {
     fontSize: 42,
     fontWeight: '900',
-    color: 'rgba(0,0,0,0.25)',
+    color: 'rgba(0,0,0,0.5)',
     letterSpacing: 8,
   },
   logoSub: {
