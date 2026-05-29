@@ -1,6 +1,6 @@
-export  const theme = {
+export const theme = {
   colors: {
-    background: 'rgba(255, 255, 255, 0.16)',
+    background: '#000000',
     backgroundDark: '#5a5d6b',
     surface: '#7a7d8c',
     text: '#FFFFFF',
@@ -47,7 +47,7 @@ export  const theme = {
   fonts: {
     family: {
       regular: 'System',
-      display: 'Oswald_700Bold',  
+      display: 'Oswald_700Bold',
     },
     size: {
       xs: 11,
