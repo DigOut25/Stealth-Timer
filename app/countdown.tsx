@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     letterSpacing: fonts.letterSpacing.wide,
   },
   logo: {
-    width: 220,
+    width: 200,
     height: 55,
   },
 });

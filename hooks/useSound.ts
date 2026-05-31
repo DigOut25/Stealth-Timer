@@ -3,9 +3,10 @@ import { Audio } from 'expo-av';
 import { SoundOption } from '../store/useSettingsStore';
 
 const soundMap = {
-  bell: require('../assets/sounds/Buzzer.mp3'),
+  bell: require('../assets/sounds/bell.wav'),
   buzzer: require('../assets/sounds/Buzzer.mp3'),
-  whistle: require('../assets/sounds/Buzzer.mp3'),
+  whistle: require('../assets/sounds/whistle.wav'),
+  finishHim: require('../assets/sounds/FinishHim.mp3'),
 };
 
 export function resolveSound(sound: SoundOption) {

@@ -11,6 +11,7 @@ const PRESET_SOUNDS: { name: PresetSound; label: string }[] = [
   { name: 'bell', label: 'Bell' },
   { name: 'buzzer', label: 'Buzzer' },
   { name: 'whistle', label: 'Whistle' },
+  { name: 'finishHim', label: 'Finish' },
 ];
 
 async function previewSound(sound: SoundOption) {

@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export type PresetSound = 'bell' | 'buzzer' | 'whistle';
+export type PresetSound = 'bell' | 'buzzer' | 'whistle' | 'finishHim';
 
 export type SoundOption =
   | { type: 'preset'; name: PresetSound }
