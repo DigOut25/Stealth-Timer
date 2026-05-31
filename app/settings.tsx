@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, padding, fonts } from '../constants/theme';
 import { useSettingsStore, SoundOption } from '../store/useSettingsStore';
+import Constants from 'expo-constants';
 
 function getSoundLabel(sound: SoundOption): string {
   if (sound.type === 'custom') return sound.label;
@@ -95,7 +96,7 @@ export default function SettingsScreen() {
           <View style={styles.card}>
             <View style={styles.row}>
               <Text style={styles.rowLabel}>Version</Text>
-              <Text style={styles.rowValue}>1.0.0</Text>
+              <Text style={styles.rowValue}>{Constants.expoConfig?.version ?? '1.0.0'}</Text>
             </View>
           </View>
         </View>

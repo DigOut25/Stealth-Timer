@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, padding, fonts } from '../constants/theme';
 import { useSettingsStore, SoundOption, PresetSound } from '../store/useSettingsStore';
-import { useSound, resolveSound } from '../hooks/useSound';
+import { resolveSound } from '../hooks/useSound';
 import { Audio } from 'expo-av';
 
 const PRESET_SOUNDS: { name: PresetSound; label: string }[] = [
@@ -31,8 +31,14 @@ async function previewSound(sound: SoundOption) {
 export default function SoundPickerScreen() {
   const router = useRouter();
   const { type } = useLocalSearchParams<{ type: 'roundEnd' | 'restEnd' }>();
-  const { roundEndSound, restEndSound, customRecordings, setRoundEndSound, setRestEndSound } =
-    useSettingsStore();
+  const {
+    roundEndSound,
+    restEndSound,
+    customRecordings,
+    setRoundEndSound,
+    setRestEndSound,
+    removeRecording,
+  } = useSettingsStore();
 
   const currentSound = type === 'roundEnd' ? roundEndSound : restEndSound;
   const setSound = type === 'roundEnd' ? setRoundEndSound : setRestEndSound;
@@ -48,6 +54,25 @@ export default function SoundPickerScreen() {
     return false;
   }
 
+  function confirmDelete(uri: string, label: string) {
+    Alert.alert('Delete Recording', `Are you sure you want to delete "${label}"?`, [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: () => {
+          if (roundEndSound.type === 'custom' && roundEndSound.uri === uri) {
+            setRoundEndSound({ type: 'preset', name: 'bell' });
+          }
+          if (restEndSound.type === 'custom' && restEndSound.uri === uri) {
+            setRestEndSound({ type: 'preset', name: 'buzzer' });
+          }
+          removeRecording(uri);
+        },
+      },
+    ]);
+  }
+
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
@@ -59,7 +84,6 @@ export default function SoundPickerScreen() {
           <View style={{ width: 24 }} />
         </View>
 
-        {/* Preset sounds */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Presets</Text>
           <View style={styles.card}>
@@ -99,7 +123,6 @@ export default function SoundPickerScreen() {
           </View>
         </View>
 
-        {/* Custom recordings */}
         {customRecordings.length > 0 && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>My Recordings</Text>
@@ -113,14 +136,14 @@ export default function SoundPickerScreen() {
                 const selected = isSelected(sound);
                 return (
                   <View key={recording.uri}>
-                    <TouchableOpacity
-                      style={styles.row}
-                      onPress={() => {
-                        setSound(sound);
-                        router.back();
-                      }}
-                    >
-                      <View style={styles.rowLeft}>
+                    <View style={styles.row}>
+                      <TouchableOpacity
+                        style={styles.rowLeft}
+                        onPress={() => {
+                          setSound(sound);
+                          router.back();
+                        }}
+                      >
                         {selected && (
                           <Ionicons
                             name="checkmark"
@@ -132,14 +155,24 @@ export default function SoundPickerScreen() {
                         <Text style={[styles.rowLabel, selected && styles.rowLabelSelected]}>
                           {recording.label}
                         </Text>
-                      </View>
-                      <TouchableOpacity
-                        style={styles.previewBtn}
-                        onPress={() => previewSound(sound)}
-                      >
-                        <Ionicons name="play-circle-outline" size={24} color={colors.textMuted} />
                       </TouchableOpacity>
-                    </TouchableOpacity>
+
+                      <View style={styles.rowRight}>
+                        <TouchableOpacity
+                          style={styles.previewBtn}
+                          onPress={() => previewSound(sound)}
+                        >
+                          <Ionicons name="play-circle-outline" size={24} color={colors.textMuted} />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                          style={styles.deleteBtn}
+                          onPress={() => confirmDelete(recording.uri, recording.label)}
+                        >
+                          <Ionicons name="trash-outline" size={20} color={colors.accent} />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
                     {index < customRecordings.length - 1 && <View style={styles.divider} />}
                   </View>
                 );
@@ -148,7 +181,6 @@ export default function SoundPickerScreen() {
           </View>
         )}
 
-        {/* Record new sound */}
         <View style={styles.section}>
           <TouchableOpacity
             style={styles.recordBtn}
@@ -244,5 +276,14 @@ const styles = StyleSheet.create({
     fontSize: fonts.size.md,
     color: colors.text,
     letterSpacing: fonts.letterSpacing.wide,
+  },
+  deleteBtn: {
+    padding: spacing.xs,
+    marginLeft: spacing.xs,
+  },
+  rowRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
   },
 });

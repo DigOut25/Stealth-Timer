@@ -6,9 +6,11 @@ import { colors, spacing, padding, fonts } from '../constants/theme';
 import { TimerDisplay } from '../components/Timer';
 import { useTimer } from '../hooks/useTimer';
 import { useSessionStore } from '../store/useSessionStore';
+import { useKeepAwake } from '../hooks/useKeepAwake';
 
 export default function CountdownScreen() {
   const { roundLength, numRounds, restLength } = useSessionStore();
+  useKeepAwake();
   const router = useRouter();
 
   const totalSeconds = roundLength * 60;
