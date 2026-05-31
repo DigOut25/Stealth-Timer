@@ -7,8 +7,9 @@ export const theme = {
     textMuted: 'rgba(255,255,255,0.6)',
     textDark: 'rgba(0,0,0,0.5)',
     accent: '#E8605A',
-    buttonStart: '#5B7FA6',
+    buttonPause: '#5B7FA6',
     buttonStop: '#E8605A',
+    buttonStart: 'rgba(7, 201, 0, 0.85)',
     timerText: 'white',
   },
 
@@ -24,7 +25,7 @@ export const theme = {
   padding: {
     screen: 20,
     card: 16,
-    button: 18,
+    button: 12,
     input: 12,
   },
 
@@ -39,7 +40,7 @@ export const theme = {
   radius: {
     sm: 8,
     md: 12,
-    button: 14,
+    button: 25,
     card: 16,
     full: 999,
   },

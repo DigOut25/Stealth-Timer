@@ -12,7 +12,11 @@ export function Controls({ onStop, onStart, startLabel = 'Start' }: Props) {
   return (
     <View style={styles.row}>
       <Button label="Stop" variant="stop" onPress={onStop} />
-      <Button label={startLabel} variant="start" onPress={onStart} />
+      <Button
+        label={startLabel}
+        variant={startLabel === 'Pause' ? 'pause' : 'start'}
+        onPress={onStart}
+      />
     </View>
   );
 }
@@ -20,7 +24,7 @@ export function Controls({ onStop, onStart, startLabel = 'Start' }: Props) {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    gap: spacing.sm,
+    gap: spacing.md,
     width: '100%',
     paddingHorizontal: spacing.xs,
   },

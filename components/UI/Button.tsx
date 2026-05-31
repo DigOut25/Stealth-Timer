@@ -1,7 +1,9 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { theme } from '../../constants/theme';
+import { radius, colors, padding } from '../../constants/theme';
+import { useHaptics } from '../../hooks/useHaptics';
+import * as Haptics from 'expo-haptics';
 
-type Variant = 'start' | 'stop';
+type Variant = 'start' | 'stop' | 'pause';
 
 type Props = {
   label: string;
@@ -11,10 +13,15 @@ type Props = {
 };
 
 export function Button({ label, variant, onPress, disabled }: Props) {
+  const { impact } = useHaptics();
+  const handlePress = async () => {
+    await impact(Haptics.ImpactFeedbackStyle.Light);
+    onPress();
+  };
   return (
     <TouchableOpacity
       style={[styles.btn, styles[variant], disabled && styles.disabled]}
-      onPress={onPress}
+      onPress={handlePress}
       disabled={disabled}
     >
       <Text style={styles.label}>{label}</Text>
@@ -25,21 +32,22 @@ export function Button({ label, variant, onPress, disabled }: Props) {
 const styles = StyleSheet.create({
   btn: {
     flex: 1,
-    paddingVertical: 18,
-    borderRadius: theme.radius.button,
+    paddingVertical: padding.button,
+    borderRadius: radius.button,
     alignItems: 'center',
   },
   start: {
-    backgroundColor: theme.colors.buttonStart,
+    backgroundColor: colors.buttonStart,
   },
   stop: {
-    backgroundColor: theme.colors.buttonStop,
+    backgroundColor: colors.buttonStop,
   },
+  pause: { backgroundColor: colors.buttonPause },
   disabled: {
     opacity: 0.5,
   },
   label: {
-    color: theme.colors.text,
+    color: colors.text,
     fontSize: 20,
     fontWeight: '700',
     letterSpacing: 0.5,

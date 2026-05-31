@@ -1,25 +1,40 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { StealthSlider } from '../components/UI/Slider';
 import { Controls } from '../components/Controls';
-import { colors, spacing, padding, fonts } from '../constants/theme';
-import { TimerDisplay } from '../components/Timer';
+import { colors, spacing, padding } from '../constants/theme';
+import { Ionicons } from '@expo/vector-icons';
+import { useSessionStore } from '../store/useSessionStore';
 
-export default function SettingsScreen() {
-  const [roundLength, setRoundLength] = useState(5);
-  const [numRounds, setNumRounds] = useState(3);
+export default function HomeScreen() {
+  const { roundLength, restLength, numRounds, setRoundLength, setRestLength, setNumRounds } =
+    useSessionStore();
   const router = useRouter();
+
+  const formatRest = (seconds: number) => {
+    if (seconds < 60) return `${seconds} seconds`;
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return secs === 0 ? `${mins} minute${mins !== 1 ? 's' : ''}` : `${mins}m ${secs}s`;
+  };
 
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
-        <View style={styles.logoArea}>
-          <Image source={require('../assets/logo.png')} style={styles.logo} resizeMode="contain" />
-        </View>
+        <TouchableOpacity style={styles.settingsIcon} onPress={() => router.push('/settings')}>
+          <Ionicons name="menu" size={spacing.xxl} color={colors.timerText} />
+        </TouchableOpacity>
 
-        <TimerDisplay secondsLeft={0} currentRound={1} totalRounds={numRounds} showRound={false} />
+        <View>
+          <View style={styles.logoArea}>
+            <Image
+              source={require('../assets/logo.png')}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
+        </View>
 
         <View style={styles.sliders}>
           <StealthSlider
@@ -32,7 +47,16 @@ export default function SettingsScreen() {
             onChange={setRoundLength}
           />
           <StealthSlider
-            label="Number Of Rounds"
+            label="Rest"
+            value={restLength}
+            min={0}
+            max={180}
+            step={10}
+            displayValue={restLength === 0 ? 'No Rest' : formatRest(restLength)}
+            onChange={setRestLength}
+          />
+          <StealthSlider
+            label="Rounds"
             value={numRounds}
             min={1}
             max={10}
@@ -42,12 +66,7 @@ export default function SettingsScreen() {
           />
         </View>
 
-        <Controls
-          onStop={() => {}}
-          onStart={() =>
-            router.push({ pathname: '/countdown', params: { roundLength, numRounds } })
-          }
-        />
+        <Controls onStop={() => {}} onStart={() => router.push({ pathname: '/countdown' })} />
       </View>
     </SafeAreaView>
   );
@@ -62,32 +81,24 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: spacing.lg,
+    paddingBottom: spacing.lg,
     paddingHorizontal: padding.screen,
   },
   logoArea: {
-    alignItems: 'center',
     marginTop: spacing.md,
-  },
-  logoText: {
-    fontFamily: fonts.family.display,
-    fontSize: fonts.size.logo,
-    color: colors.text,
-    letterSpacing: fonts.letterSpacing.widest,
-  },
-  logoSub: {
-    fontFamily: fonts.family.display,
-    fontSize: fonts.size.lg,
-    color: colors.text,
-    letterSpacing: fonts.letterSpacing.wider,
-    marginTop: -4,
+    alignItems: 'center',
   },
   sliders: {
     width: '100%',
     gap: spacing.md,
   },
   logo: {
-    width: 300,
-    height: 200,
+    width: 200,
+    height: 55,
+  },
+  settingsIcon: {
+    position: 'absolute',
+    top: spacing.sm,
+    right: 5,
   },
 });

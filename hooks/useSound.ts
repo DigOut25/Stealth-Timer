@@ -1,17 +1,34 @@
 import { useEffect, useRef } from 'react';
 import { Audio } from 'expo-av';
+import { SoundOption } from '../store/useSettingsStore';
 
-export function useSound(soundFile: any) {
+const soundMap = {
+  bell: require('../assets/sounds/Buzzer.mp3'),
+  buzzer: require('../assets/sounds/Buzzer.mp3'),
+  whistle: require('../assets/sounds/Buzzer.mp3'),
+};
+
+export function resolveSound(sound: SoundOption) {
+  if (sound.type === 'custom') {
+    return { uri: sound.uri };
+  }
+  return soundMap[sound.name];
+}
+
+export function useSound(sound: SoundOption) {
   const soundRef = useRef<Audio.Sound | null>(null);
 
   useEffect(() => {
     async function load() {
-      const { sound } = await Audio.Sound.createAsync(soundFile);
-      soundRef.current = sound;
+      const source = resolveSound(sound);
+      const { sound: loaded } = await Audio.Sound.createAsync(source);
+      soundRef.current = loaded;
     }
     load();
-    return () => { soundRef.current?.unloadAsync(); };
-  }, []);
+    return () => {
+      soundRef.current?.unloadAsync();
+    };
+  }, [sound.type === 'custom' ? sound.uri : sound.name]);
 
   const play = async () => {
     try {
