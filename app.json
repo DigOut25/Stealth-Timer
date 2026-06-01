@@ -4,7 +4,7 @@
     "slug": "stealth-timer",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/icon-stealth.png",
     "scheme": "stealth-timer",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#000000",
@@ -15,18 +15,29 @@
       "backgroundColor": "#000000"
     },
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.stealthbjj.timer",
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
+        "foregroundImage": "./assets/icon-stealth.png",
         "backgroundColor": "#000000"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.stealthbjj.timer"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-asset", "expo-font"]
+    "plugins": ["expo-asset", "expo-font", "expo-router"],
+    "extra": {
+      "eas": {
+        "projectId": "db99c69c-d367-485a-a756-9fb02a8f04c0"
+      }
+    },
+    "owner": "nickb-57"
   }
 }
