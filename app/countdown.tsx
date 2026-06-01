@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Controls } from '../components/Controls';
 import { colors, spacing, padding, fonts } from '../constants/theme';
@@ -7,6 +7,8 @@ import { TimerDisplay } from '../components/Timer';
 import { useTimer } from '../hooks/useTimer';
 import { useSessionStore } from '../store/useSessionStore';
 import { useKeepAwake } from '../hooks/useKeepAwake';
+import { ScreenWrapper } from '../components/ScreenWrapper';
+import { Logo } from '../components/Logo';
 
 export default function CountdownScreen() {
   const { roundLength, numRounds, restLength } = useSessionStore();
@@ -24,11 +26,9 @@ export default function CountdownScreen() {
   });
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <ScreenWrapper>
       <View style={styles.container}>
-        <View style={styles.logoArea}>
-          <Image source={require('../assets/logo.png')} style={styles.logo} resizeMode="contain" />
-        </View>
+        <Logo />
 
         <TimerDisplay
           secondsLeft={secondsLeft}
@@ -45,15 +45,11 @@ export default function CountdownScreen() {
           startLabel={finished ? 'Done' : running ? 'Pause' : 'Resume'}
         />
       </View>
-    </SafeAreaView>
+    </ScreenWrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -61,18 +57,10 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.lg,
     paddingHorizontal: padding.screen,
   },
-  logoArea: {
-    marginTop: spacing.md,
-    alignItems: 'center',
-  },
   finishedText: {
     color: colors.text,
     fontFamily: fonts.family.display,
     fontSize: fonts.size.xxl,
     letterSpacing: fonts.letterSpacing.wide,
-  },
-  logo: {
-    width: 200,
-    height: 55,
   },
 });

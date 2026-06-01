@@ -1,10 +1,16 @@
-import { View, Text, StyleSheet, TouchableOpacity, Switch } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { TouchableOpacity } from 'react-native';
+import { Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, padding, fonts } from '../constants/theme';
 import { useSettingsStore, SoundOption } from '../store/useSettingsStore';
 import Constants from 'expo-constants';
+import { Card } from '../components/UI/Card';
+import { SectionHeader } from '../components/UI/SectionHeader';
+import { ListItem } from '../components/UI/ListItem';
+import { Toggle } from '../components/UI/Toggle';
+import { ScreenWrapper } from '../components/ScreenWrapper';
 
 function getSoundLabel(sound: SoundOption): string {
   if (sound.type === 'custom') return sound.label;
@@ -23,7 +29,7 @@ export default function SettingsScreen() {
   } = useSettingsStore();
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <ScreenWrapper>
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()}>
@@ -33,83 +39,46 @@ export default function SettingsScreen() {
           <View style={{ width: 24 }} />
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Sound</Text>
-          <View style={styles.card}>
-            <TouchableOpacity
-              style={styles.row}
-              onPress={() =>
-                router.push({ pathname: '/soundPicker', params: { type: 'roundEnd' } })
-              }
-            >
-              <Text style={styles.rowLabel}>Round End Sound</Text>
-              <View style={styles.rowRight}>
-                <Text style={styles.rowValue}>{getSoundLabel(roundEndSound)}</Text>
-                <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
-              </View>
-            </TouchableOpacity>
+        <SectionHeader title="Sound" />
+        <Card>
+          <ListItem
+            label="Round End Sound"
+            value={getSoundLabel(roundEndSound)}
+            onPress={() => router.push({ pathname: '/soundPicker', params: { type: 'roundEnd' } })}
+            showDivider
+          />
+          <ListItem
+            label="Rest End Sound"
+            value={getSoundLabel(restEndSound)}
+            onPress={() => router.push({ pathname: '/soundPicker', params: { type: 'restEnd' } })}
+          />
+        </Card>
 
-            <View style={styles.divider} />
+        <SectionHeader title="Session" />
+        <Card>
+          <Toggle
+            label="Haptic Feedback"
+            value={hapticsEnabled}
+            onValueChange={setHapticsEnabled}
+            showDivider
+          />
+          <Toggle label="Keep Awake" value={keepAwake} onValueChange={setKeepAwake} />
+        </Card>
 
-            <TouchableOpacity
-              style={styles.row}
-              onPress={() => router.push({ pathname: '/soundPicker', params: { type: 'restEnd' } })}
-            >
-              <Text style={styles.rowLabel}>Rest End Sound</Text>
-              <View style={styles.rowRight}>
-                <Text style={styles.rowValue}>{getSoundLabel(restEndSound)}</Text>
-                <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Session</Text>
-          <View style={styles.card}>
-            <View style={styles.row}>
-              <Text style={styles.rowLabel}>Haptic Feedback</Text>
-              <Switch
-                value={hapticsEnabled}
-                onValueChange={setHapticsEnabled}
-                trackColor={{ false: colors.surface, true: colors.accent }}
-                thumbColor={colors.text}
-              />
-            </View>
-
-            <View style={styles.divider} />
-
-            <View style={styles.row}>
-              <Text style={styles.rowLabel}>Keep Awake</Text>
-              <Switch
-                value={keepAwake}
-                onValueChange={setKeepAwake}
-                trackColor={{ false: colors.surface, true: colors.accent }}
-                thumbColor={colors.text}
-              />
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>About</Text>
-          <View style={styles.card}>
-            <View style={styles.row}>
-              <Text style={styles.rowLabel}>Version</Text>
-              <Text style={styles.rowValue}>{Constants.expoConfig?.version ?? '1.0.0'}</Text>
-            </View>
-          </View>
-        </View>
+        <SectionHeader title="About" />
+        <Card>
+          <ListItem
+            label="Version"
+            value={Constants.expoConfig?.version ?? '1.0.0'}
+            showChevron={false}
+          />
+        </Card>
       </View>
-    </SafeAreaView>
+    </ScreenWrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
   container: {
     flex: 1,
     paddingHorizontal: padding.screen,
@@ -125,48 +94,5 @@ const styles = StyleSheet.create({
     fontSize: fonts.size.xl,
     color: colors.text,
     letterSpacing: fonts.letterSpacing.wide,
-  },
-  section: {
-    marginTop: spacing.lg,
-  },
-  sectionTitle: {
-    fontFamily: fonts.family.display,
-    fontSize: fonts.size.sm,
-    color: colors.textMuted,
-    letterSpacing: fonts.letterSpacing.wider,
-    marginBottom: spacing.sm,
-    textTransform: 'uppercase',
-  },
-  card: {
-    backgroundColor: colors.background,
-    borderRadius: 12,
-    overflow: 'hidden',
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: spacing.md,
-  },
-  rowLabel: {
-    fontFamily: fonts.family.display,
-    fontSize: fonts.size.md,
-    color: colors.text,
-    letterSpacing: fonts.letterSpacing.normal,
-  },
-  rowRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.xs,
-  },
-  rowValue: {
-    fontFamily: fonts.family.display,
-    fontSize: fonts.size.md,
-    color: colors.textMuted,
-  },
-  divider: {
-    height: 1,
-    backgroundColor: colors.background,
-    marginHorizontal: padding.card,
   },
 });

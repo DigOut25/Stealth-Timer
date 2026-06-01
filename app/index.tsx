@@ -1,11 +1,13 @@
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { StealthSlider } from '../components/UI/Slider';
 import { Controls } from '../components/Controls';
 import { colors, spacing, padding } from '../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { useSessionStore } from '../store/useSessionStore';
+import { ScreenWrapper } from '../components/ScreenWrapper';
+import { Logo } from '../components/Logo';
 
 export default function HomeScreen() {
   const { roundLength, restLength, numRounds, setRoundLength, setRestLength, setNumRounds } =
@@ -20,21 +22,13 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <ScreenWrapper>
       <View style={styles.container}>
         <TouchableOpacity style={styles.settingsIcon} onPress={() => router.push('/settings')}>
           <Ionicons name="menu" size={spacing.xxl} color={colors.timerText} />
         </TouchableOpacity>
 
-        <View>
-          <View style={styles.logoArea}>
-            <Image
-              source={require('../assets/logo.png')}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          </View>
-        </View>
+        <Logo />
 
         <View style={styles.sliders}>
           <StealthSlider
@@ -68,15 +62,11 @@ export default function HomeScreen() {
 
         <Controls onStop={() => {}} onStart={() => router.push({ pathname: '/countdown' })} />
       </View>
-    </SafeAreaView>
+    </ScreenWrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -84,17 +74,9 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.lg,
     paddingHorizontal: padding.screen,
   },
-  logoArea: {
-    marginTop: spacing.md,
-    alignItems: 'center',
-  },
   sliders: {
     width: '100%',
     gap: spacing.md,
-  },
-  logo: {
-    width: 200,
-    height: 55,
   },
   settingsIcon: {
     position: 'absolute',
