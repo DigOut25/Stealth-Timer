@@ -3,9 +3,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, padding, fonts } from '../constants/theme';
-import { useSettingsStore, SoundOption, PresetSound } from '../store/useSettingsStore';
+import { useSettingsStore } from '../store/useSettingsStore';
 import { resolveSound } from '../hooks/useSound';
 import { Audio } from 'expo-av';
+import { PresetSound, SoundOption } from '../types/sounds';
 
 const PRESET_SOUNDS: { name: PresetSound; label: string }[] = [
   { name: 'bell', label: 'Bell' },

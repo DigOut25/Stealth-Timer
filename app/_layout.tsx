@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   logo: {
-    width: 280,
-    height: 140,
+    width: '70%',
+    aspectRatio: 360 / 86,
   },
 });

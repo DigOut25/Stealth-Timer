@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
   },
   settingsIcon: {
     position: 'absolute',
-    top: spacing.sm,
     right: 5,
   },
 });

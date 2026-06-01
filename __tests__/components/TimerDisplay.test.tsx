@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 import { TimerDisplay } from '../../components/Timer';
 
-// Mock fonts so Oswald doesn't error in tests
 jest.mock('@expo-google-fonts/oswald', () => ({
   useFonts: () => [true, null],
   Oswald_700Bold: 'Oswald_700Bold',
@@ -48,5 +47,15 @@ describe('TimerDisplay', () => {
   it('formats seconds under a minute correctly', () => {
     render(<TimerDisplay {...defaultProps} secondsLeft={45} />);
     expect(screen.getByText('0:45')).toBeTruthy();
+  });
+
+  it('shows Rest label when isResting is true', () => {
+    render(<TimerDisplay {...defaultProps} isResting={true} />);
+    expect(screen.getByText('Rest')).toBeTruthy();
+  });
+
+  it('shows round label when isResting is false', () => {
+    render(<TimerDisplay {...defaultProps} isResting={false} />);
+    expect(screen.getByText('Round 1 of 3')).toBeTruthy();
   });
 });
