@@ -1,6 +1,6 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { radius, colors, padding } from '../../constants/theme';
-import { useHaptics } from '../../hooks/useHaptics';
+import { radius, colors, padding } from '@/constants';
+import { useHaptics } from '@/hooks';
 import * as Haptics from 'expo-haptics';
 
 type Variant = 'start' | 'stop' | 'pause';

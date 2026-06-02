@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, spacing, padding, fonts } from '../../constants/theme';
+import { colors, spacing, padding, fonts } from '@/constants';
 import React from 'react';
 
 type Props = {

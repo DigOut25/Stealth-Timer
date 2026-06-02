@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-native';
-import { useTimer } from '../../hooks/useTimer';
+import { useTimer } from '@/hooks/useTimer';
 
 jest.useFakeTimers();
 

@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
-import { theme } from '../../constants/theme';
+import { theme } from '@/constants';
 
 type Props = {
   label: string;

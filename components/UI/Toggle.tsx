@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Switch } from 'react-native';
-import { colors, spacing, padding, fonts } from '../../constants/theme';
+import { colors, spacing, padding, fonts } from '@/constants/theme';
 import React from 'react';
 
 type Props = {

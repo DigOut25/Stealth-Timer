@@ -3,14 +3,12 @@ import { useRouter } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
 import { Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, spacing, padding, fonts } from '../constants/theme';
-import { useSettingsStore, SoundOption } from '../store/useSettingsStore';
+import { colors, spacing, padding, fonts } from '@/constants';
+import { useSettingsStore } from '@/store';
 import Constants from 'expo-constants';
-import { Card } from '../components/UI/Card';
-import { SectionHeader } from '../components/UI/SectionHeader';
-import { ListItem } from '../components/UI/ListItem';
-import { Toggle } from '../components/UI/Toggle';
-import { ScreenWrapper } from '../components/ScreenWrapper';
+import { ScreenWrapper } from '@/components';
+import { SectionHeader, Card, ListItem, Toggle } from '@/components/UI';
+import { SoundOption } from '@/types/sounds';
 
 function getSoundLabel(sound: SoundOption): string {
   if (sound.type === 'custom') return sound.label;

@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet, TouchableOpacity, Alert, TextInput } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { useState, useRef } from 'react';
-import { colors, spacing, padding, fonts } from '../constants/theme';
-import { useSettingsStore, SoundOption } from '../store/useSettingsStore';
+import { colors, spacing, padding, fonts } from '@/constants';
+import { useSettingsStore } from '@/store';
+import { SoundOption } from '@/types/sounds';
 
 export default function RecordSoundScreen() {
   const router = useRouter();

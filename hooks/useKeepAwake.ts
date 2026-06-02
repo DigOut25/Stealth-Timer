@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
-import { useSettingsStore } from '../store/useSettingsStore';
+import { useSettingsStore } from '@/store';
 
 export function useKeepAwake() {
   const { keepAwake } = useSettingsStore();

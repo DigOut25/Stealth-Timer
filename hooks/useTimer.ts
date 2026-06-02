@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSound } from './useSound';
-import { useSettingsStore } from '../store/useSettingsStore';
+import { useSettingsStore } from '@/store';
 import { useHaptics } from './useHaptics';
 import * as Haptics from 'expo-haptics';
 

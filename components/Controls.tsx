@@ -1,6 +1,6 @@
 import { View, StyleSheet } from 'react-native';
-import { Button } from './UI/Button';
-import { spacing } from '../constants/theme';
+import { Button } from '@/components/UI';
+import { spacing } from '@/constants';
 
 type Props = {
   onStop: () => void;

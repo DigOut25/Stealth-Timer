@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { View, Image, StyleSheet, Animated } from 'react-native';
 import { useRouter } from 'expo-router';
-import { colors } from '../constants/theme';
 
 export default function SplashScreen() {
   const opacity = useRef(new Animated.Value(0)).current;
@@ -40,7 +39,7 @@ export default function SplashScreen() {
   return (
     <View style={styles.container}>
       <Animated.View style={{ opacity, transform: [{ scale }] }}>
-        <Image source={require('../assets/logo.png')} style={styles.logo} resizeMode="contain" />
+        <Image source={require('@/assets/logo.png')} style={styles.logo} resizeMode="contain" />
       </Animated.View>
     </View>
   );

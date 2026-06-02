@@ -1,13 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
-import { StealthSlider } from '../components/UI/Slider';
-import { Controls } from '../components/Controls';
-import { colors, spacing, padding } from '../constants/theme';
+
+import { colors, spacing, padding } from '@/constants';
 import { Ionicons } from '@expo/vector-icons';
-import { useSessionStore } from '../store/useSessionStore';
-import { ScreenWrapper } from '../components/ScreenWrapper';
-import { Logo } from '../components/Logo';
+import { useSessionStore } from '@/store';
+import { StealthSlider } from '../components/UI';
+import { Controls, Logo, ScreenWrapper } from '@/components';
 
 export default function HomeScreen() {
   const { roundLength, restLength, numRounds, setRoundLength, setRestLength, setNumRounds } =

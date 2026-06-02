@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
-import { TimerDisplay } from '../../components/Timer';
+import { TimerDisplay } from '@/components/Timer';
 
 jest.mock('@expo-google-fonts/oswald', () => ({
   useFonts: () => [true, null],

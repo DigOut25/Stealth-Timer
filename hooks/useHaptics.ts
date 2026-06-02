@@ -1,5 +1,5 @@
 import * as Haptics from 'expo-haptics';
-import { useSettingsStore } from '../store/useSettingsStore';
+import { useSettingsStore } from '@/store';
 
 export function useHaptics() {
   const { hapticsEnabled } = useSettingsStore();
