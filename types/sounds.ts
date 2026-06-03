@@ -1,4 +1,4 @@
-export type PresetSound = 'bell' | 'buzzer' | 'whistle' | 'finishHim';
+export type PresetSound = 'bell' | 'buzzer' | 'whistle' | 'finishHim' | 'OG';
 
 export type SoundOption =
   | { type: 'preset'; name: PresetSound }

@@ -33,6 +33,10 @@ export function useTimer({ totalSeconds, totalRounds, restSeconds }: Props) {
     setFinished(false);
     isRestingRef.current = false;
     currentRoundRef.current = 1;
+    const timeout = setTimeout(() => {
+      playRestEnd();
+    }, 500);
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {

@@ -13,6 +13,7 @@ const PRESET_SOUNDS: { name: PresetSound; label: string }[] = [
   { name: 'buzzer', label: 'Buzzer' },
   { name: 'whistle', label: 'Whistle' },
   { name: 'finishHim', label: 'Finish' },
+  { name: 'OG', label: 'OG' },
 ];
 
 async function previewSound(sound: SoundOption) {
@@ -64,7 +65,7 @@ export default function SoundPickerScreen() {
         style: 'destructive',
         onPress: () => {
           if (roundEndSound.type === 'custom' && roundEndSound.uri === uri) {
-            setRoundEndSound({ type: 'preset', name: 'bell' });
+            setRoundEndSound({ type: 'preset', name: 'OG' });
           }
           if (restEndSound.type === 'custom' && restEndSound.uri === uri) {
             setRestEndSound({ type: 'preset', name: 'buzzer' });

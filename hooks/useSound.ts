@@ -7,6 +7,7 @@ const soundMap = {
   buzzer: require('@/assets/sounds/Buzzer.mp3'),
   whistle: require('@/assets/sounds/whistle.wav'),
   finishHim: require('@/assets/sounds/FinishHim.mp3'),
+  OG: require('@/assets/sounds/OG.m4a'),
 };
 
 export function resolveSound(sound: SoundOption) {

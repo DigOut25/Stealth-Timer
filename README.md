@@ -17,7 +17,7 @@ A Brazilian Jiu-Jitsu round timer app built with React Native and Expo, develope
 - Configurable round length (1–15 minutes), rest periods (0–3 minutes in 10s increments), and number of rounds (1–10)
 - Visual and audio cues at round and rest end
 - Separate sounds for round end and rest end
-- Preset sounds (Bell, Buzzer, Whistle) with in-app preview
+- Preset sounds (Bell, Buzzer, Whistle, Finish, OG) with in-app preview
 - Custom sound recording via device microphone
 - Haptic feedback on round transitions
 - Keep Awake — screen stays on during session
