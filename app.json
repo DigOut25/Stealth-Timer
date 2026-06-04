@@ -33,7 +33,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-asset", "expo-font", "expo-router"],
+    "plugins": ["expo-asset", "expo-font", "expo-router", "./plugins/fix-splash-screen"],
     "extra": {
       "eas": {
         "projectId": "db99c69c-d367-485a-a756-9fb02a8f04c0"
