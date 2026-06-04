@@ -5,6 +5,7 @@ import { View, Image, Animated, StyleSheet, Easing } from 'react-native';
 import * as SystemUI from 'expo-system-ui';
 import { useFonts, Oswald_700Bold } from '@expo-google-fonts/oswald';
 import * as SplashScreen from 'expo-splash-screen';
+import { Audio } from 'expo-av';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -12,27 +13,29 @@ export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({ Oswald_700Bold });
   const [showSplash, setShowSplash] = useState(true);
 
-  useEffect(() => {
-    SystemUI.setBackgroundColorAsync('#000000');
-  }, []);
-
   const opacity = useRef(new Animated.Value(1)).current;
   const fadeIn = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    SystemUI.setBackgroundColorAsync('#000000');
+    Audio.setAudioModeAsync({
+      playsInSilentModeIOS: true,
+      staysActiveInBackground: false,
+      shouldDuckAndroid: true,
+    });
+  }, []);
 
   useEffect(() => {
     if (fontsLoaded || fontError) {
       SplashScreen.hideAsync().then(() => {
         Animated.sequence([
-          // Fade in logo
           Animated.timing(fadeIn, {
             toValue: 1,
             duration: 800,
             easing: Easing.out(Easing.cubic),
             useNativeDriver: true,
           }),
-          // Hold
           Animated.delay(1000),
-          // Fade out
           Animated.timing(opacity, {
             toValue: 0,
             duration: 800,

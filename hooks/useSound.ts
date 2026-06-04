@@ -19,26 +19,42 @@ export function resolveSound(sound: SoundOption) {
 
 export function useSound(sound: SoundOption) {
   const soundRef = useRef<Audio.Sound | null>(null);
+  const isLoadedRef = useRef(false);
 
   useEffect(() => {
     async function load() {
-      const source = resolveSound(sound);
-      const { sound: loaded } = await Audio.Sound.createAsync(source);
-      soundRef.current = loaded;
+      try {
+        await Audio.setAudioModeAsync({
+          playsInSilentModeIOS: true,
+          staysActiveInBackground: false,
+          shouldDuckAndroid: true,
+        });
+        const source = resolveSound(sound);
+        const { sound: loaded } = await Audio.Sound.createAsync(source);
+        soundRef.current = loaded;
+        isLoadedRef.current = true;
+      } catch (e) {
+        console.warn('Sound load error:', e);
+      }
     }
     load();
     return () => {
+      isLoadedRef.current = false;
       soundRef.current?.unloadAsync();
     };
-  }, [sound.type === 'custom' ? sound.uri : sound.name]);
+  }, [sound.type === 'custom' ? sound.uri : (sound as any).name]);
 
   const play = async () => {
     try {
-      await soundRef.current?.replayAsync();
+      if (!isLoadedRef.current || !soundRef.current) {
+        console.warn('Sound not loaded yet');
+        return;
+      }
+      await soundRef.current.replayAsync();
     } catch (e) {
       console.warn('Sound error:', e);
     }
   };
 
-  return { play };
+  return { play, resolveSound };
 }
