@@ -5,9 +5,10 @@ import { SoundOption } from '@/types/sounds';
 const soundMap = {
   bell: require('@/assets/sounds/bell.wav'),
   buzzer: require('@/assets/sounds/Buzzer.mp3'),
-  whistle: require('@/assets/sounds/whistle.wav'),
   finishHim: require('@/assets/sounds/FinishHim.mp3'),
   OG: require('@/assets/sounds/OG.m4a'),
+  chopper: require('@/assets/sounds/chopper.mp3'),
+  jacko: require('@/assets/sounds/jacko.mp3'),
 };
 
 export function resolveSound(sound: SoundOption) {

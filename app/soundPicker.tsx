@@ -7,13 +7,15 @@ import { useSettingsStore } from '@/store';
 import { resolveSound } from '@/hooks';
 import { Audio } from 'expo-av';
 import { PresetSound, SoundOption } from '@/types/sounds';
+import { ScreenHeader } from '@/components/UI';
 
 const PRESET_SOUNDS: { name: PresetSound; label: string }[] = [
   { name: 'bell', label: 'Bell' },
   { name: 'buzzer', label: 'Buzzer' },
-  { name: 'whistle', label: 'Whistle' },
   { name: 'finishHim', label: 'Finish' },
   { name: 'OG', label: 'OG' },
+  { name: 'jacko', label: 'Jacko' },
+  { name: 'chopper', label: 'Chopper' },
 ];
 
 async function previewSound(sound: SoundOption) {
@@ -79,14 +81,7 @@ export default function SoundPickerScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="chevron-back" size={24} color={colors.text} />
-          </TouchableOpacity>
-          <Text style={styles.title}>{title}</Text>
-          <View style={{ width: 24 }} />
-        </View>
-
+        <ScreenHeader title={title} onBack={() => router.back()} />
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Presets</Text>
           <View style={styles.card}>

@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity, Alert, TextInput } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
@@ -6,6 +7,8 @@ import { useState, useRef } from 'react';
 import { colors, spacing, padding, fonts } from '@/constants';
 import { useSettingsStore } from '@/store';
 import { SoundOption } from '@/types/sounds';
+import { ScreenWrapper } from '@/components/ScreenWrapper';
+import { ScreenHeader } from '@/components/UI/ScreenHeader';
 
 export default function RecordSoundScreen() {
   const router = useRouter();
@@ -27,16 +30,13 @@ export default function RecordSoundScreen() {
         Alert.alert('Permission required', 'Microphone access is needed to record sounds.');
         return;
       }
-
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
       });
-
       const { recording } = await Audio.Recording.createAsync(
         Audio.RecordingOptionsPresets.HIGH_QUALITY
       );
-
       setRecording(recording);
       setIsRecording(true);
       setRecordedUri(null);
@@ -102,98 +102,84 @@ export default function RecordSoundScreen() {
   }
 
   return (
-    <View style={styles.body}>
-      <Text style={styles.hint}>
-        {isRecording
-          ? 'Recording... tap stop when done'
-          : recordedUri
-            ? 'Recording saved — preview or save it'
-            : 'Tap the mic to start recording'}
-      </Text>
+    <ScreenWrapper>
+      <View style={styles.container}>
+        <ScreenHeader title="Record Sound" onBack={() => router.back()} />
 
-      {/* Record button */}
-      <TouchableOpacity
-        style={[styles.micBtn, isRecording && styles.micBtnActive]}
-        onPress={isRecording ? stopRecording : startRecording}
-      >
-        <Ionicons name={isRecording ? 'stop' : 'mic'} size={48} color={colors.text} />
-      </TouchableOpacity>
-
-      {isRecording && <Text style={styles.recordingLabel}>Recording...</Text>}
-
-      {/* Preview and save — shown after recording, before naming */}
-      {recordedUri && !isRecording && !showNameInput && (
-        <View style={styles.actions}>
-          <TouchableOpacity style={styles.actionBtn} onPress={playPreview}>
-            <Ionicons
-              name={isPlaying ? 'pause-circle-outline' : 'play-circle-outline'}
-              size={24}
-              color={colors.text}
-            />
-            <Text style={styles.actionBtnText}>{isPlaying ? 'Playing...' : 'Preview'}</Text>
-          </TouchableOpacity>
+        <View style={styles.body}>
+          <Text style={styles.hint}>
+            {isRecording
+              ? 'Recording... tap stop when done'
+              : recordedUri
+                ? 'Recording saved — preview or save it'
+                : 'Tap the mic to start recording'}
+          </Text>
 
           <TouchableOpacity
-            style={[styles.actionBtn, styles.actionBtnSave]}
-            onPress={saveRecording}
+            style={[styles.micBtn, isRecording && styles.micBtnActive]}
+            onPress={isRecording ? stopRecording : startRecording}
           >
-            <Ionicons name="checkmark-circle-outline" size={24} color={colors.text} />
-            <Text style={styles.actionBtnText}>Save</Text>
+            <Ionicons name={isRecording ? 'stop' : 'mic'} size={48} color={colors.text} />
           </TouchableOpacity>
-        </View>
-      )}
 
-      {/* Name input — shown after tapping save */}
-      {showNameInput && (
-        <View style={styles.nameInputArea}>
-          <TextInput
-            style={styles.nameInput}
-            placeholder="Name your sound..."
-            placeholderTextColor={colors.textMuted}
-            value={label}
-            onChangeText={setLabel}
-            autoFocus
-          />
-          <TouchableOpacity
-            style={[styles.actionBtn, styles.actionBtnSave, !label.trim() && styles.disabled]}
-            onPress={confirmSave}
-            disabled={!label.trim()}
-          >
-            <Text style={styles.actionBtnText}>Confirm</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+          {isRecording && <Text style={styles.recordingLabel}>Recording...</Text>}
 
-      {/* Re-record — shown after recording, before naming */}
-      {recordedUri && !isRecording && !showNameInput && (
-        <TouchableOpacity style={styles.rerecordBtn} onPress={startRecording}>
-          <Text style={styles.rerecordText}>Record Again</Text>
-        </TouchableOpacity>
-      )}
-    </View>
+          {recordedUri && !isRecording && !showNameInput && (
+            <View style={styles.actions}>
+              <TouchableOpacity style={styles.actionBtn} onPress={playPreview}>
+                <Ionicons
+                  name={isPlaying ? 'pause-circle-outline' : 'play-circle-outline'}
+                  size={24}
+                  color={colors.text}
+                />
+                <Text style={styles.actionBtnText}>{isPlaying ? 'Playing...' : 'Preview'}</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.actionBtn, styles.actionBtnSave]}
+                onPress={saveRecording}
+              >
+                <Ionicons name="checkmark-circle-outline" size={24} color={colors.text} />
+                <Text style={styles.actionBtnText}>Save</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
+          {showNameInput && (
+            <View style={styles.nameInputArea}>
+              <TextInput
+                style={styles.nameInput}
+                placeholder="Name your sound..."
+                placeholderTextColor={colors.textMuted}
+                value={label}
+                onChangeText={setLabel}
+                autoFocus
+              />
+              <TouchableOpacity
+                style={[styles.actionBtn, styles.actionBtnSave, !label.trim() && styles.disabled]}
+                onPress={confirmSave}
+                disabled={!label.trim()}
+              >
+                <Text style={styles.actionBtnText}>Confirm</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
+          {recordedUri && !isRecording && !showNameInput && (
+            <TouchableOpacity style={styles.rerecordBtn} onPress={startRecording}>
+              <Text style={styles.rerecordText}>Record Again</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+    </ScreenWrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
   container: {
     flex: 1,
     paddingHorizontal: padding.screen,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: spacing.md,
-  },
-  title: {
-    fontFamily: fonts.family.display,
-    fontSize: fonts.size.xl,
-    color: colors.text,
-    letterSpacing: fonts.letterSpacing.wide,
   },
   body: {
     flex: 1,

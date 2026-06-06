@@ -1,13 +1,10 @@
 import { View, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
-import { TouchableOpacity } from 'react-native';
-import { Text } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, padding, fonts } from '@/constants';
 import { useSettingsStore } from '@/store';
 import Constants from 'expo-constants';
 import { ScreenWrapper } from '@/components';
-import { SectionHeader, Card, ListItem, Toggle } from '@/components/UI';
+import { SectionHeader, Card, ListItem, Toggle, ScreenHeader } from '@/components/UI';
 import { SoundOption } from '@/types/sounds';
 
 function getSoundLabel(sound: SoundOption): string {
@@ -29,14 +26,7 @@ export default function SettingsScreen() {
   return (
     <ScreenWrapper>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="chevron-back" size={24} color={colors.text} />
-          </TouchableOpacity>
-          <Text style={styles.title}>Settings</Text>
-          <View style={{ width: 24 }} />
-        </View>
-
+        <ScreenHeader title="Settings" onBack={() => router.back()} />
         <SectionHeader title="Sound" />
         <Card>
           <ListItem

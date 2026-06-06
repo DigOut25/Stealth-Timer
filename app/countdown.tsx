@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { colors, spacing, padding, fonts } from '@/constants';
-import { ScreenWrapper, TimerDisplay, Controls, Logo } from '@/components';
+import { ScreenWrapper, TimerDisplay, Controls, Logo, GymMode } from '@/components';
 import { useKeepAwake, useTimer } from '@/hooks';
 import { useSessionStore } from '@/store';
 import { Ionicons } from '@expo/vector-icons';
@@ -26,53 +26,29 @@ export default function CountdownScreen() {
   return (
     <ScreenWrapper>
       {gymMode ? (
-        <TouchableOpacity
-          style={styles.gymModeContainer}
-          onPress={() => setRunning(r => !r)}
-          activeOpacity={1}
-        >
-          <TouchableOpacity
-            style={styles.closeBtn}
-            onPress={() => setGymMode(false)}
-            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          >
-            <Ionicons name="close" size={50} color={colors.textMuted} />
-          </TouchableOpacity>
-
-          <Text style={styles.roundLabel}>
-            {finished
-              ? 'Session Complete'
-              : isResting
-                ? 'Rest'
-                : `Round ${currentRound} of ${rounds}`}
-          </Text>
-
-          <Text style={[styles.timer, isResting && styles.timerRest]}>
-            {`${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')}`}
-          </Text>
-
-          <Text style={styles.hint}>
-            {finished ? '' : running ? 'Tap to pause' : 'Tap to resume'}
-          </Text>
-        </TouchableOpacity>
+        <GymMode
+          secondsLeft={secondsLeft}
+          currentRound={currentRound}
+          totalRounds={rounds}
+          isResting={isResting}
+          running={running}
+          finished={finished}
+          onClose={() => setGymMode(false)}
+          onTogglePause={() => setRunning(r => !r)}
+        />
       ) : (
         <View style={styles.container}>
-          {/* TV icon positioned absolutely */}
           <TouchableOpacity style={styles.gymModeBtn} onPress={() => setGymMode(true)}>
             <Ionicons name="tv-outline" size={36} color={colors.textMuted} />
           </TouchableOpacity>
-
           <Logo />
-
           <TimerDisplay
             secondsLeft={secondsLeft}
             currentRound={currentRound}
             totalRounds={rounds}
             isResting={isResting}
           />
-
           {finished && <Text style={styles.finishedText}>Session Complete!</Text>}
-
           <Controls
             onStop={() => router.back()}
             onStart={() => setRunning(r => !r)}
