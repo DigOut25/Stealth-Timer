@@ -4,7 +4,7 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { useState, useRef } from 'react';
-import { colors, spacing, padding, fonts } from '@/constants';
+import { colors, spacing, padding, fonts, radius } from '@/constants';
 import { useSettingsStore } from '@/store';
 import { SoundOption } from '@/types/sounds';
 import { ScreenWrapper } from '@/components/ScreenWrapper';
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundDark,
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.lg,
-    borderRadius: 12,
+    borderRadius: radius.md,
   },
   actionBtnSave: {
     backgroundColor: colors.buttonStart,
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
   nameInput: {
     width: '100%',
     backgroundColor: colors.backgroundDark,
-    borderRadius: 12,
+    borderRadius: radius.md,
     paddingVertical: spacing.md,
     paddingHorizontal: padding.card,
     fontFamily: fonts.family.display,

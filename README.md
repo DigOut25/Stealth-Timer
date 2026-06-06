@@ -106,7 +106,20 @@ stealth-timer/
 git clone https://github.com/DigOut25/Stealth-Timer
 cd stealth-timer
 npm install
-npx expo start
+```
+
+### Running on iOS simulator
+
+```bash
+npx expo prebuild    # generate native iOS/Android folders (first time only)
+npx expo run:ios
+```
+
+### Running on Android emulator
+
+```bash
+npx expo prebuild    # generate native iOS/Android folders (first time only)
+npx expo run:android
 ```
 
 ### Running Tests

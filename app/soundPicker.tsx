@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, spacing, padding, fonts } from '@/constants';
+import { colors, spacing, padding, fonts, radius } from '@/constants';
 import { useSettingsStore } from '@/store';
 import { resolveSound } from '@/hooks';
 import { Audio } from 'expo-av';
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: colors.background,
-    borderRadius: 12,
+    borderRadius: radius.md,
     overflow: 'hidden',
     paddingHorizontal: padding.card,
   },
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: spacing.sm,
     backgroundColor: colors.backgroundDark,
-    borderRadius: 12,
+    borderRadius: radius.md,
     paddingVertical: spacing.md,
   },
   recordBtnText: {

@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native';
-import { colors } from '@/constants';
+import { colors, radius } from '@/constants';
 
 type Props = {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ export function Card({ children }: Props) {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.background,
-    borderRadius: 12,
+    borderRadius: radius.md,
     overflow: 'hidden',
   },
 });

@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   roundLabel: {
     fontFamily: fonts.family.display,
-    fontSize: 48,
+    fontSize: fonts.size.gymRound,
     color: colors.text,
     letterSpacing: fonts.letterSpacing.wider,
     opacity: 0.7,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   timer: {
     fontFamily: fonts.family.display,
-    fontSize: 200,
+    fontSize: fonts.size.gymTimer,
     color: colors.text,
     letterSpacing: -4,
   },
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   hint: {
     fontFamily: fonts.family.display,
-    fontSize: 20,
+    fontSize: fonts.size.gymHint,
     color: colors.textMuted,
     marginTop: spacing.xl,
     letterSpacing: fonts.letterSpacing.wide,

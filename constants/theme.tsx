@@ -59,6 +59,9 @@ export const theme = {
       xxl: 28,
       timer: 96,
       logo: 42,
+      gymTimer: 200,
+      gymRound: 48,
+      gymHint: 20,
     },
     weight: {
       regular: '400' as const,
