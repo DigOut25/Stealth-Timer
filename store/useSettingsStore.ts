@@ -20,8 +20,8 @@ type SettingsStore = {
 export const useSettingsStore = create<SettingsStore>()(
   persist(
     set => ({
-      roundEndSound: { type: 'preset', name: 'OG' },
-      restEndSound: { type: 'preset', name: 'buzzer' },
+      roundEndSound: { type: 'preset', name: 'buzzer' },
+      restEndSound: { type: 'preset', name: 'bell' },
       hapticsEnabled: true,
       keepAwake: true,
       customRecordings: [],
