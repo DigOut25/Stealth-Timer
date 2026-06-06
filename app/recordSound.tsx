@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -101,10 +101,36 @@ export default function RecordSoundScreen() {
     router.back();
   }
 
+  async function handleBack() {
+    if (isRecording && recording) {
+      try {
+        await recording.stopAndUnloadAsync();
+      } catch (e) {
+        console.warn('Stop on back error:', e);
+      }
+    }
+    if (soundRef.current) {
+      await soundRef.current.unloadAsync();
+    }
+    router.back();
+  }
+
+  useEffect(() => {
+    return () => {
+      // Cleanup on unmount — stop recording and unload sound if active
+      if (recording) {
+        recording.stopAndUnloadAsync().catch(() => {});
+      }
+      if (soundRef.current) {
+        soundRef.current.unloadAsync().catch(() => {});
+      }
+    };
+  }, [recording]);
+
   return (
     <ScreenWrapper>
       <View style={styles.container}>
-        <ScreenHeader title="Record Sound" onBack={() => router.back()} />
+        <ScreenHeader title="Record Sound" onBack={handleBack} />
 
         <View style={styles.body}>
           <Text style={styles.hint}>
